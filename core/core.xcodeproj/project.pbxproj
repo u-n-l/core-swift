@@ -7,6 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		23BDF60625BAF63F005FF61D /* UnlCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23BDF60525BAF63F005FF61D /* UnlCore.swift */; };
+		23BDF60A25BB08A9005FF61D /* Elevation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23BDF60925BB08A9005FF61D /* Elevation.swift */; };
+		23BDF60C25BB096D005FF61D /* Bounds.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23BDF60B25BB096D005FF61D /* Bounds.swift */; };
+		23BDF60E25BB09BB005FF61D /* Point.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23BDF60D25BB09BB005FF61D /* Point.swift */; };
+		23BDF61025BB0A03005FF61D /* PointWithElevation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23BDF60F25BB0A03005FF61D /* PointWithElevation.swift */; };
+		23BDF61225BB0A15005FF61D /* BoundsWithElevation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23BDF61125BB0A15005FF61D /* BoundsWithElevation.swift */; };
+		23BDF61425BB0B6E005FF61D /* LocationIdWithElevation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23BDF61325BB0B6E005FF61D /* LocationIdWithElevation.swift */; };
+		23BDF61625BB0BAD005FF61D /* Neighbour.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23BDF61525BB0BAD005FF61D /* Neighbour.swift */; };
 		23F96BD625B9BC6D001E792B /* core.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 23F96BCC25B9BC6D001E792B /* core.framework */; };
 		23F96BDB25B9BC6D001E792B /* coreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23F96BDA25B9BC6D001E792B /* coreTests.swift */; };
 		23F96BDD25B9BC6D001E792B /* core.h in Headers */ = {isa = PBXBuildFile; fileRef = 23F96BCF25B9BC6D001E792B /* core.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -23,6 +31,14 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		23BDF60525BAF63F005FF61D /* UnlCore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnlCore.swift; sourceTree = "<group>"; };
+		23BDF60925BB08A9005FF61D /* Elevation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Elevation.swift; sourceTree = "<group>"; };
+		23BDF60B25BB096D005FF61D /* Bounds.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bounds.swift; sourceTree = "<group>"; };
+		23BDF60D25BB09BB005FF61D /* Point.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Point.swift; sourceTree = "<group>"; };
+		23BDF60F25BB0A03005FF61D /* PointWithElevation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PointWithElevation.swift; sourceTree = "<group>"; };
+		23BDF61125BB0A15005FF61D /* BoundsWithElevation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoundsWithElevation.swift; sourceTree = "<group>"; };
+		23BDF61325BB0B6E005FF61D /* LocationIdWithElevation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationIdWithElevation.swift; sourceTree = "<group>"; };
+		23BDF61525BB0BAD005FF61D /* Neighbour.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Neighbour.swift; sourceTree = "<group>"; };
 		23F96BCC25B9BC6D001E792B /* core.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = core.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		23F96BCF25B9BC6D001E792B /* core.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = core.h; sourceTree = "<group>"; };
 		23F96BD025B9BC6D001E792B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -72,7 +88,15 @@
 			isa = PBXGroup;
 			children = (
 				23F96BCF25B9BC6D001E792B /* core.h */,
+				23BDF60525BAF63F005FF61D /* UnlCore.swift */,
+				23BDF60925BB08A9005FF61D /* Elevation.swift */,
 				23F96BD025B9BC6D001E792B /* Info.plist */,
+				23BDF60B25BB096D005FF61D /* Bounds.swift */,
+				23BDF60D25BB09BB005FF61D /* Point.swift */,
+				23BDF60F25BB0A03005FF61D /* PointWithElevation.swift */,
+				23BDF61325BB0B6E005FF61D /* LocationIdWithElevation.swift */,
+				23BDF61525BB0BAD005FF61D /* Neighbour.swift */,
+				23BDF61125BB0A15005FF61D /* BoundsWithElevation.swift */,
 			);
 			path = core;
 			sourceTree = "<group>";
@@ -148,6 +172,7 @@
 				TargetAttributes = {
 					23F96BCB25B9BC6D001E792B = {
 						CreatedOnToolsVersion = 11.7;
+						LastSwiftMigration = 1170;
 					};
 					23F96BD425B9BC6D001E792B = {
 						CreatedOnToolsVersion = 11.7;
@@ -195,6 +220,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				23BDF61625BB0BAD005FF61D /* Neighbour.swift in Sources */,
+				23BDF60A25BB08A9005FF61D /* Elevation.swift in Sources */,
+				23BDF61425BB0B6E005FF61D /* LocationIdWithElevation.swift in Sources */,
+				23BDF61225BB0A15005FF61D /* BoundsWithElevation.swift in Sources */,
+				23BDF60E25BB09BB005FF61D /* Point.swift in Sources */,
+				23BDF61025BB0A03005FF61D /* PointWithElevation.swift in Sources */,
+				23BDF60625BAF63F005FF61D /* UnlCore.swift in Sources */,
+				23BDF60C25BB096D005FF61D /* Bounds.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -340,6 +373,7 @@
 		23F96BE125B9BC6D001E792B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = RRNDQFMS83;
@@ -356,6 +390,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = unl.core;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -364,6 +399,7 @@
 		23F96BE225B9BC6D001E792B /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEFINES_MODULE = YES;
 				DEVELOPMENT_TEAM = RRNDQFMS83;
@@ -388,6 +424,7 @@
 		23F96BE425B9BC6D001E792B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = RRNDQFMS83;
 				INFOPLIST_FILE = coreTests/Info.plist;
@@ -406,6 +443,7 @@
 		23F96BE525B9BC6D001E792B /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = RRNDQFMS83;
 				INFOPLIST_FILE = coreTests/Info.plist;
