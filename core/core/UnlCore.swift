@@ -209,74 +209,7 @@ class UnlCore {
         
         return BoundsWithElevation(bounds: bounds, elevation: elevation);
     }
-    
-    /*
-     
-     final String DIRECTIONS_STRING = "nsew";
-           // based on github.com/davetroy/geohash-js
-           LocationIdWithElevation locationIdWithElevation = excludeElevation((locationId));
-           String locationIdString = locationIdWithElevation.getLocationId();
-           int elevation = locationIdWithElevation.getElevation().getElevation();
-           String elevationType = locationIdWithElevation.getElevation().getElevationType();
 
-
-           String directionChar = direction.toLowerCase();
-           int directionNumber;
-
-           if (locationIdString.length() == 0) {
-               throw new IllegalArgumentException("Invalid locationId");
-           }
-           if (!DIRECTIONS_STRING.contains(direction)) {
-               throw new IllegalArgumentException("Invalid direction");
-           }
-
-           switch (directionChar) {
-               case "s":
-                   directionNumber = 1;
-                   break;
-               case "e":
-                   directionNumber = 2;
-                   break;
-               case "w":
-                   directionNumber = 3;
-                   break;
-               default:
-                   directionNumber = 0;
-           }
-
-           String[][] neighbour = {
-                   {"p0r21436x8zb9dcf5h7kjnmqesgutwvy", "bc01fg45238967deuvhjyznpkmstqrwx"}, //n
-                   {"14365h7k9dcfesgujnmqp0r2twvyx8zb", "238967debc01fg45kmstqrwxuvhjyznp"}, //s
-                   {"bc01fg45238967deuvhjyznpkmstqrwx", "p0r21436x8zb9dcf5h7kjnmqesgutwvy"}, //e
-                   {"238967debc01fg45kmstqrwxuvhjyznp", "14365h7k9dcfesgujnmqp0r2twvyx8zb"} //w
-           };
-           String[][] border = {
-                   {"prxz", "bcfguvyz"}, //n
-                   {"028b", "0145hjnp"}, //s
-                   {"bcfguvyz", "prxz"}, //e
-                   {"0145hjnp", "028b"} //w
-           };
-
-           char lastCh = locationIdString.charAt(locationIdString.length() - 1); // last character of hash
-           String parent = locationIdString.substring(0, locationIdString.length() - 1); // hash without last character
-           int type = locationIdString.length() % 2;
-
-           // check for edge-cases which don't share common prefix
-           if (border[directionNumber][type].indexOf(lastCh) != -1 && !parent.equals("")) {
-               parent = adjacent(parent, direction);
-           }
-
-           // append letter for direction to parent
-           String nextLocationId =
-                   parent + BASE32.charAt(neighbour[directionNumber][type].indexOf(lastCh));
-
-           if (elevation != 0 && !elevationType.equals("")) {
-               return appendElevation(nextLocationId, locationIdWithElevation.getElevation());
-           }
-
-           return nextLocationId;
-     */
-    
     func adjacent(locationId: String, direction: String) -> String {
         let directionsString: String = "nsew";
         // based on github.com/davetroy/geohash-js
