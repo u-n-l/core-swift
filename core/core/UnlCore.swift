@@ -209,7 +209,7 @@ class UnlCore {
         
         return BoundsWithElevation(bounds: bounds, elevation: elevation);
     }
-
+    
     func adjacent(locationId: String, direction: String) -> String {
         let directionsString: String = "nsew";
         // based on github.com/davetroy/geohash-js
@@ -271,7 +271,7 @@ class UnlCore {
         
         return nextLocationId;
     }
-
+    
     func neighbour(locationId: String) -> Neighbour {
         return Neighbour(
             n: adjacent(locationId: locationId, direction: "n"),
@@ -282,5 +282,57 @@ class UnlCore {
             sw: adjacent(locationId: adjacent(locationId: locationId, direction: "s"), direction: "w"),
             w: adjacent(locationId: locationId, direction: "w"),
             nw: adjacent(locationId: adjacent(locationId: locationId, direction: "n"), direction: "w"))
+    }
+    
+    func gridLines(bounds: Bounds, precision: Int) -> [[[Double]]] {
+        var lines: [[[Double]]] = [];
+        
+        
+        let lonMin: Double = bounds.sw.lon;
+        let lonMax: Double = bounds.ne.lon;
+        
+        let latMin: Double = bounds.sw.lat;
+        let latMax: Double = bounds.ne.lat;
+        
+        let swCellLocationId: String = encode(
+            lat: bounds.sw.lat,
+            lon: bounds.sw.lon,
+            precision: precision,
+            elevation: UnlCore.defaultElevation
+        );
+        
+        let swCellBounds: BoundsWithElevation = self.bounds(locationId: swCellLocationId);
+        
+        let latStart: Double = swCellBounds.bounds.ne.lat;
+        let lonStart: Double = swCellBounds.bounds.ne.lon;
+        
+        var currentCellLocationId: String = swCellLocationId;
+        var currentCellBounds: BoundsWithElevation = swCellBounds;
+        var currentCellNorthLatitude: Double = latStart;
+        
+        while (currentCellNorthLatitude <= latMax) {
+            lines.append([[lonMin, currentCellNorthLatitude], [lonMax, currentCellNorthLatitude]]);
+            
+            currentCellLocationId = adjacent(locationId: currentCellLocationId, direction: "n");
+            currentCellBounds = self.bounds(locationId: currentCellLocationId);
+            currentCellNorthLatitude = currentCellBounds.bounds.ne.lat;
+        }
+        
+        currentCellLocationId = swCellLocationId;
+        var currentCellEastLongitude: Double = lonStart;
+        
+        while (currentCellEastLongitude <= lonMax) {
+            lines.append([[currentCellEastLongitude, latMin],[currentCellEastLongitude, latMax]]);
+            
+            currentCellLocationId = adjacent(locationId: currentCellLocationId, direction: "e");
+            currentCellBounds = self.bounds(locationId: currentCellLocationId);
+            currentCellEastLongitude = currentCellBounds.bounds.ne.lon;
+        }
+        
+        return lines;
+    }
+    
+    func gridLines(bounds: Bounds) -> [[[Double]]] {
+        return gridLines(bounds: bounds, precision: UnlCore.defaultPrecision);
     }
 }

@@ -181,6 +181,27 @@ class coreTests: XCTestCase {
             Neighbour(n: "gbpb#-5", ne: "u000#-5", e: "spbp#-5", se: "spbn#-5", s: "ezzy#-5", sw: "ezzw#-5", w: "ezzx#-5", nw: "gbp8#-5"),
             "fetch neighbours below 5cm result is incorrect"
         );
+    }
+    
+    func testGridLines() {
+        let unlCore = UnlCore.getInstance();
         
+        /* retrieves grid lines with precision 9 */
+        XCTAssert(
+            unlCore.gridLines(bounds: Bounds(sw: Point(lat: 46.77210936378606, lon: 23.595436614661565), ne: Point(lat: 46.77227194246396, lon: 23.59560827603795)), precision: 9).count == 7,
+            "gridLines with precision 9 result is incorrect"
+        );
+        
+        /* retrieves grid lines with no precision specified (default 9) */
+        XCTAssert(
+            unlCore.gridLines(bounds: Bounds(sw: Point(lat: 46.77210936378606, lon: 23.595436614661565), ne: Point(lat: 46.77227194246396, lon: 23.59560827603795))).count == 7,
+            "gridLines with no precision specified result is incorrect"
+        );
+        
+        /* retrieves grid lines with precision 12 */
+        XCTAssert(
+            unlCore.gridLines(bounds: Bounds(sw: Point(lat: 46.77210936378606, lon: 23.595436614661565), ne: Point(lat: 46.77227194246396, lon: 23.59560827603795)), precision: 12).count == 1481,
+            "gridLines with precision 12 result is incorrect"
+        );
     }
 }
