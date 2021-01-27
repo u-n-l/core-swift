@@ -287,7 +287,6 @@ class UnlCore {
     func gridLines(bounds: Bounds, precision: Int) -> [[[Double]]] {
         var lines: [[[Double]]] = [];
         
-        
         let lonMin: Double = bounds.sw.lon;
         let lonMax: Double = bounds.ne.lon;
         
