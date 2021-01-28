@@ -204,3 +204,4 @@ class coreTests: XCTestCase {
             "gridLines with precision 12 result is incorrect"
         );
     }
+}
