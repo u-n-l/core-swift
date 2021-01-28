@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		235343FB25C17DC6009AF3C9 /* LocationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 235343FA25C17DC6009AF3C9 /* LocationService.swift */; };
+		238EC9E125C01E1400B07933 /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = 238EC9E025C01E1400B07933 /* Location.swift */; };
+		23A8FEDE25C2CF27005BE37F /* UnlCoreError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23A8FEDD25C2CF27005BE37F /* UnlCoreError.swift */; };
 		23BDF60625BAF63F005FF61D /* UnlCore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23BDF60525BAF63F005FF61D /* UnlCore.swift */; };
 		23BDF60A25BB08A9005FF61D /* Elevation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23BDF60925BB08A9005FF61D /* Elevation.swift */; };
 		23BDF60C25BB096D005FF61D /* Bounds.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23BDF60B25BB096D005FF61D /* Bounds.swift */; };
@@ -31,6 +34,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		235343FA25C17DC6009AF3C9 /* LocationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationService.swift; sourceTree = "<group>"; };
+		238EC9E025C01E1400B07933 /* Location.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Location.swift; sourceTree = "<group>"; };
+		23A8FEDD25C2CF27005BE37F /* UnlCoreError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnlCoreError.swift; sourceTree = "<group>"; };
 		23BDF60525BAF63F005FF61D /* UnlCore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnlCore.swift; sourceTree = "<group>"; };
 		23BDF60925BB08A9005FF61D /* Elevation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Elevation.swift; sourceTree = "<group>"; };
 		23BDF60B25BB096D005FF61D /* Bounds.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bounds.swift; sourceTree = "<group>"; };
@@ -97,6 +103,9 @@
 				23BDF61325BB0B6E005FF61D /* LocationIdWithElevation.swift */,
 				23BDF61525BB0BAD005FF61D /* Neighbour.swift */,
 				23BDF61125BB0A15005FF61D /* BoundsWithElevation.swift */,
+				238EC9E025C01E1400B07933 /* Location.swift */,
+				235343FA25C17DC6009AF3C9 /* LocationService.swift */,
+				23A8FEDD25C2CF27005BE37F /* UnlCoreError.swift */,
 			);
 			path = core;
 			sourceTree = "<group>";
@@ -222,8 +231,11 @@
 			files = (
 				23BDF61625BB0BAD005FF61D /* Neighbour.swift in Sources */,
 				23BDF60A25BB08A9005FF61D /* Elevation.swift in Sources */,
+				235343FB25C17DC6009AF3C9 /* LocationService.swift in Sources */,
 				23BDF61425BB0B6E005FF61D /* LocationIdWithElevation.swift in Sources */,
 				23BDF61225BB0A15005FF61D /* BoundsWithElevation.swift in Sources */,
+				23A8FEDE25C2CF27005BE37F /* UnlCoreError.swift in Sources */,
+				238EC9E125C01E1400B07933 /* Location.swift in Sources */,
 				23BDF60E25BB09BB005FF61D /* Point.swift in Sources */,
 				23BDF61025BB0A03005FF61D /* PointWithElevation.swift in Sources */,
 				23BDF60625BAF63F005FF61D /* UnlCore.swift in Sources */,

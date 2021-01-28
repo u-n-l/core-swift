@@ -6,13 +6,25 @@
 //  Copyright © 2021 unl. All rights reserved.
 //
 
-public class Point: Equatable {
+public class Point: Equatable, Decodable {
     public let lat: Double;
     public let lon: Double;
     
     init(lat: Double, lon: Double){
         self.lat = lat;
         self.lon = lon;
+    }
+    
+    enum CodingKeys: String, CodingKey {
+        case lat = "lat"
+        case lon = "lon"
+    }
+    
+    required public init(from decoder: Decoder) throws {
+        let values = try decoder.container(keyedBy: CodingKeys.self);
+        
+        lat = try values.decode(Double.self, forKey: CodingKeys.lat)
+        lon = try values.decode(Double.self, forKey: CodingKeys.lon)
     }
     
     public static func == (lhs: Point, rhs: Point) -> Bool {
