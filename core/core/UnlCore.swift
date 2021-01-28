@@ -11,6 +11,12 @@ class UnlCore {
     private static let base32 = "0123456789bcdefghjkmnpqrstuvwxyz";
     public static let defaultElevation = Elevation(elevation: 0, elevationType: "floor");
     public static let defaultPrecision = 9;
+    private static let baseUrl: String = "https://map.unl.global/api/v1/location/";
+    private static let wordsEndpoint: String = "words/";
+    private static let geohashEndpoint: String = "geohash/";
+    private static let coordinatesEndpoint: String = "coordinates/";
+    private static let locationIdRegex: String = "^[0123456789bcdefghjkmnpqrstuvwxyz]{3,16}[@#]?[0-9]{0,3}$";
+    private static let coordinatesRegex: String = "^-?[0-9]{0,2}\\.?[0-9]{0,16},\\s?-?[0-9]{0,3}\\.?[0-9]{0,16}$";
     
     init() {}
     
@@ -21,7 +27,11 @@ class UnlCore {
         return instance;
     }
     
-    func encode(lat: Double, lon: Double, precision: Int, elevation: Elevation) -> String {
+    func encode(lat: Double, lon: Double, precision: Int, elevation: Elevation) throws -> String {
+        if(lat.isNaN || lon.isNaN){
+            throw UnlCoreError.illegalArgument(messsage: "Invalid coordinates or precision");
+        }
+        
         var idx: Int = 0;
         var bit: Int = 0;
         var evenBit: Bool = true;
@@ -72,33 +82,33 @@ class UnlCore {
         let elevationType: String = elevation.elevationType;
         let elevationObject: Elevation = Elevation(elevation: elevationNumber, elevationType: elevationType);
         
-        return appendElevation(locationIdWithoutElevation: locationId, elevation: elevationObject);
+        return try appendElevation(locationIdWithoutElevation: locationId, elevation: elevationObject);
     }
     
-    func encode(lat: Double, lon: Double, precision: Int) -> String {
-        return encode(lat: lat, lon: lon, precision: precision, elevation: UnlCore.defaultElevation );
+    func encode(lat: Double, lon: Double, precision: Int) throws -> String {
+        return try encode(lat: lat, lon: lon, precision: precision, elevation: UnlCore.defaultElevation );
     }
     
-    func encode(lat: Double, lon: Double, elevation: Elevation) -> String {
+    func encode(lat: Double, lon: Double, elevation: Elevation) throws -> String {
         for p in 1..<(UnlCore.defaultPrecision + 1) {
-            let hash: String = encode(lat: lat, lon: lon, precision: p);
-            let posn: PointWithElevation = decode(locationId: hash);
+            let hash: String = try encode(lat: lat, lon: lon, precision: p);
+            let posn: PointWithElevation = try decode(locationId: hash);
             
             if(posn.coordinates.lat == lat && posn.coordinates.lon == lon){
                 return hash;
             }
         }
         
-        return encode(lat: lat, lon: lon, precision: UnlCore.defaultPrecision, elevation: elevation);
+        return try encode(lat: lat, lon: lon, precision: UnlCore.defaultPrecision, elevation: elevation);
     }
     
-    func encode(lat: Double, lon: Double) -> String {
-        return encode(lat: lat, lon: lon, elevation: UnlCore.defaultElevation);
+    func encode(lat: Double, lon: Double) throws -> String {
+        return try encode(lat: lat, lon: lon, elevation: UnlCore.defaultElevation);
     }
     
-    func decode(locationId: String) -> PointWithElevation {
-        let locationIdWithElevation: LocationIdWithElevation = excludeElevation(locationIdWithElevation: locationId);
-        let boundsWithElevation: BoundsWithElevation = bounds(locationId: locationIdWithElevation.locationId);
+    func decode(locationId: String) throws -> PointWithElevation {
+        let locationIdWithElevation: LocationIdWithElevation = try excludeElevation(locationIdWithElevation: locationId);
+        let boundsWithElevation: BoundsWithElevation = try bounds(locationId: locationIdWithElevation.locationId);
         let bounds: Bounds = boundsWithElevation.bounds;
         
         let latMin: Double = bounds.sw.lat;
@@ -122,7 +132,11 @@ class UnlCore {
         
     }
     
-    func appendElevation(locationIdWithoutElevation: String, elevation: Elevation) -> String {
+    func appendElevation(locationIdWithoutElevation: String, elevation: Elevation) throws -> String {
+        if (locationIdWithoutElevation.count < 0) {
+            throw UnlCoreError.illegalArgument(messsage: "Invalid locationId");
+        }
+        
         if (elevation.elevation == 0) {
             return locationIdWithoutElevation;
         }
@@ -135,7 +149,15 @@ class UnlCore {
         return locationIdWithoutElevation + String(elevationChar) + String(elevation.elevation);
     }
     
-    func excludeElevation(locationIdWithElevation: String) -> LocationIdWithElevation {
+    func excludeElevation(locationIdWithElevation: String) throws -> LocationIdWithElevation {
+        if (locationIdWithElevation.count == 0) {
+            throw UnlCoreError.illegalArgument(messsage: "Invalid locationId");
+        }
+        
+        if (locationIdWithElevation.contains("#") && locationIdWithElevation.contains("@")) {
+            throw UnlCoreError.illegalArgument(messsage: "Invalid locationId");
+        }
+        
         var locationIdWithoutElevation: String = locationIdWithElevation.lowercased();
         var elevationType: String = "floor";
         var elevation: Int = 0;
@@ -155,8 +177,8 @@ class UnlCore {
         return LocationIdWithElevation(locationId: locationIdWithoutElevation, elevation: excludedElevation);
     }
     
-    func bounds(locationId: String) -> BoundsWithElevation {
-        let locationIdWithElevation: LocationIdWithElevation = excludeElevation(locationIdWithElevation: locationId);
+    func bounds(locationId: String) throws -> BoundsWithElevation {
+        let locationIdWithElevation: LocationIdWithElevation = try excludeElevation(locationIdWithElevation: locationId);
         let locationIdWithoutElevation: String = locationIdWithElevation.locationId;
         
         var evenBit: Bool = true;
@@ -173,6 +195,10 @@ class UnlCore {
             };
             
             let idx: Int = UnlCore.base32.distance(from: UnlCore.base32.startIndex, to: firstIndex!);
+            
+            if(idx == -1){
+                throw UnlCoreError.illegalArgument(messsage: "Invalid locationId");
+            }
             
             for n in (0..<5).reversed() {
                 
@@ -210,17 +236,27 @@ class UnlCore {
         return BoundsWithElevation(bounds: bounds, elevation: elevation);
     }
     
-    func adjacent(locationId: String, direction: String) -> String {
+    func adjacent(locationId: String, direction: String) throws -> String {
         let directionsString: String = "nsew";
         // based on github.com/davetroy/geohash-js
         
-        let locationIdWithElevation: LocationIdWithElevation = excludeElevation(locationIdWithElevation: locationId);
+        let locationIdWithElevation: LocationIdWithElevation = try excludeElevation(locationIdWithElevation: locationId);
         let locationIdString: String = locationIdWithElevation.locationId;
         let elevation: Int = locationIdWithElevation.elevation.elevation;
         let elevationType: String = locationIdWithElevation.elevation.elevationType;
         
         let directionChar: String = direction.lowercased();
         var directionNumber: Int;
+        
+        if (locationIdString.count == 0) {
+            throw UnlCoreError.illegalArgument(messsage: "Invalid locationId");
+        }
+        
+        if (!directionsString.contains(direction)) {
+            throw UnlCoreError.illegalArgument(messsage: "Invalid direction");
+        }
+        
+        
         
         switch directionChar {
         case "s":
@@ -256,7 +292,7 @@ class UnlCore {
         
         // check for edge-cases which don't share common prefix
         if (border[directionNumber][type].firstIndex(of: lastCh) != nil && !parent.isEmpty) {
-            parent = adjacent(locationId: parent, direction: direction);
+            parent = try adjacent(locationId: parent, direction: direction);
         }
         
         // append letter for direction to parent
@@ -266,25 +302,25 @@ class UnlCore {
         
         let nextLocationId: String = parent + String(UnlCore.base32[UnlCore.base32.index(UnlCore.base32.startIndex, offsetBy: idx)]);
         if(elevation != 0 && !elevationType.isEmpty){
-            return appendElevation(locationIdWithoutElevation: nextLocationId, elevation: locationIdWithElevation.elevation);
+            return try appendElevation(locationIdWithoutElevation: nextLocationId, elevation: locationIdWithElevation.elevation);
         }
         
         return nextLocationId;
     }
     
-    func neighbour(locationId: String) -> Neighbour {
+    func neighbour(locationId: String) throws -> Neighbour {
         return Neighbour(
-            n: adjacent(locationId: locationId, direction: "n"),
-            ne: adjacent(locationId: adjacent(locationId: locationId, direction: "n"), direction: "e"),
-            e: adjacent(locationId: locationId, direction: "e"),
-            se: adjacent(locationId: adjacent(locationId: locationId, direction: "s"), direction: "e"),
-            s: adjacent(locationId: locationId, direction: "s"),
-            sw: adjacent(locationId: adjacent(locationId: locationId, direction: "s"), direction: "w"),
-            w: adjacent(locationId: locationId, direction: "w"),
-            nw: adjacent(locationId: adjacent(locationId: locationId, direction: "n"), direction: "w"))
+            n: try adjacent(locationId: locationId, direction: "n"),
+            ne: try adjacent(locationId: adjacent(locationId: locationId, direction: "n"), direction: "e"),
+            e: try adjacent(locationId: locationId, direction: "e"),
+            se: try adjacent(locationId: adjacent(locationId: locationId, direction: "s"), direction: "e"),
+            s: try adjacent(locationId: locationId, direction: "s"),
+            sw: try adjacent(locationId: adjacent(locationId: locationId, direction: "s"), direction: "w"),
+            w: try adjacent(locationId: locationId, direction: "w"),
+            nw: try adjacent(locationId: adjacent(locationId: locationId, direction: "n"), direction: "w"))
     }
     
-    func gridLines(bounds: Bounds, precision: Int) -> [[[Double]]] {
+    func gridLines(bounds: Bounds, precision: Int) throws -> [[[Double]]] {
         var lines: [[[Double]]] = [];
         
         let lonMin: Double = bounds.sw.lon;
@@ -293,14 +329,14 @@ class UnlCore {
         let latMin: Double = bounds.sw.lat;
         let latMax: Double = bounds.ne.lat;
         
-        let swCellLocationId: String = encode(
+        let swCellLocationId: String = try encode(
             lat: bounds.sw.lat,
             lon: bounds.sw.lon,
             precision: precision,
             elevation: UnlCore.defaultElevation
         );
         
-        let swCellBounds: BoundsWithElevation = self.bounds(locationId: swCellLocationId);
+        let swCellBounds: BoundsWithElevation = try self.bounds(locationId: swCellLocationId);
         
         let latStart: Double = swCellBounds.bounds.ne.lat;
         let lonStart: Double = swCellBounds.bounds.ne.lon;
@@ -312,8 +348,8 @@ class UnlCore {
         while (currentCellNorthLatitude <= latMax) {
             lines.append([[lonMin, currentCellNorthLatitude], [lonMax, currentCellNorthLatitude]]);
             
-            currentCellLocationId = adjacent(locationId: currentCellLocationId, direction: "n");
-            currentCellBounds = self.bounds(locationId: currentCellLocationId);
+            currentCellLocationId = try adjacent(locationId: currentCellLocationId, direction: "n");
+            currentCellBounds = try self.bounds(locationId: currentCellLocationId);
             currentCellNorthLatitude = currentCellBounds.bounds.ne.lat;
         }
         
@@ -323,15 +359,63 @@ class UnlCore {
         while (currentCellEastLongitude <= lonMax) {
             lines.append([[currentCellEastLongitude, latMin],[currentCellEastLongitude, latMax]]);
             
-            currentCellLocationId = adjacent(locationId: currentCellLocationId, direction: "e");
-            currentCellBounds = self.bounds(locationId: currentCellLocationId);
+            currentCellLocationId = try adjacent(locationId: currentCellLocationId, direction: "e");
+            currentCellBounds = try self.bounds(locationId: currentCellLocationId);
             currentCellEastLongitude = currentCellBounds.bounds.ne.lon;
         }
         
         return lines;
     }
     
-    func gridLines(bounds: Bounds) -> [[[Double]]] {
-        return gridLines(bounds: bounds, precision: UnlCore.defaultPrecision);
+    func gridLines(bounds: Bounds) throws -> [[[Double]]] {
+        return try gridLines(bounds: bounds, precision: UnlCore.defaultPrecision);
+    }
+    
+    func toWords(location: String, apiKey: String, onSuccess: @escaping (Location) -> (), onFailure: @escaping(Error) -> ()) throws {
+        if(apiKey.count == 0){
+            throw UnlCoreError.illegalArgument(messsage: "API key not set");
+        }
+        
+        var endpoint: String = "";
+        
+        let matchesLocationIdRegex = location.range(of: UnlCore.locationIdRegex, options: [.regularExpression, .anchored]) != nil;
+        let matchesCoordinatesRegex = location.range(of: UnlCore.coordinatesRegex, options: [.regularExpression, .anchored]) != nil;
+        
+        if(matchesLocationIdRegex){
+            endpoint = UnlCore.geohashEndpoint;
+        } else if (matchesCoordinatesRegex) {
+            endpoint = UnlCore.coordinatesEndpoint;
+        } else {
+            throw UnlCoreError.illegalArgument(messsage: "Could not interpret your input, " + location + ". Expected a locationId or lat, lon coordinates.");
+        }
+        
+        LocationService.callEndpoint(endPoint: UnlCore.baseUrl + endpoint + location, apiKey: apiKey, onSuccess:{response in
+            let decoder = JSONDecoder()
+            do {
+                let location = try decoder.decode(Location.self, from: response);
+                onSuccess(location);
+            } catch let decodingError {
+                onFailure(decodingError);
+            }
+        }, onFailure: {error in onFailure(error)})
+    }
+    
+    func words(words: String, apiKey: String, onSuccess: @escaping (Location) -> (), onFailure: @escaping(Error) -> ()) throws {
+        if (apiKey.count == 0) {
+            throw UnlCoreError.illegalArgument(messsage: "API key not set");
+        }
+        
+        let endpoint: String = UnlCore.baseUrl + UnlCore.wordsEndpoint + words;
+        
+        LocationService.callEndpoint(endPoint: endpoint, apiKey: apiKey, onSuccess:{response in
+            let decoder = JSONDecoder()
+            
+            do {
+                let location = try decoder.decode(Location.self, from: response);
+                onSuccess(location);
+            } catch let decodingError {
+                onFailure(decodingError);
+            }
+        }, onFailure: {error in onFailure(error)})
     }
 }
