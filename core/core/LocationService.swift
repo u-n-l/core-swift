@@ -11,6 +11,8 @@ public struct LocationService {
     private static let  authorizationHeader: String = "Authorization";
     private static let  bearerAuthorization: String = "Bearer ";
     
+    private init(){}
+    
     public static func callEndpoint(endPoint: String, apiKey: String,  onSuccess: @escaping (Data) -> Void, onFailure: @escaping (Error) -> Void) {
         let url = URL(string: endPoint);
         guard let requestUrl = url else { onFailure(UnlCoreError.httpRequestError(message: "Error: invalid url!")); return; }
