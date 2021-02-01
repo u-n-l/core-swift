@@ -486,9 +486,10 @@ class UnlCore {
      - Returns: an instance of Location class, containing the coordinates, elevation, bounds, geohash and words.
      - Throws: an error if the api key string is empty, location is invalid or the call to location endpoint is unsuccessful.
      */
-    func toWords(location: String, apiKey: String, onSuccess: @escaping (Location) -> (), onFailure: @escaping(Error) -> ()) throws {
+    func toWords(location: String, apiKey: String, onSuccess: @escaping (Location) -> (), onFailure: @escaping(Error) -> ()) {
         if(apiKey.count == 0){
-            throw UnlCoreError.illegalArgument(messsage: "API key not set");
+            onFailure(UnlCoreError.illegalArgument(messsage: "API key not set"));
+            return;
         }
         
         var endpoint: String = "";
@@ -501,7 +502,8 @@ class UnlCore {
         } else if (matchesCoordinatesRegex) {
             endpoint = UnlCore.coordinatesEndpoint;
         } else {
-            throw UnlCoreError.illegalArgument(messsage: "Could not interpret your input, " + location + ". Expected a locationId or lat, lon coordinates.");
+            onFailure(UnlCoreError.illegalArgument(messsage: "Could not interpret your input, " + location + ". Expected a locationId or lat, lon coordinates."));
+            return;
         }
         
         LocationService.callEndpoint(endPoint: UnlCore.baseUrl + endpoint + location, apiKey: apiKey, onSuccess:{response in
@@ -525,9 +527,10 @@ class UnlCore {
      - Returns: an instance of Location class, containing the coordinates, elevation, bounds, geohash and words.
      - Throws: an error if the api key string is empty or the call to location endpoint is unsuccessful.
      */
-    func words(words: String, apiKey: String, onSuccess: @escaping (Location) -> (), onFailure: @escaping(Error) -> ()) throws {
+    func words(words: String, apiKey: String, onSuccess: @escaping (Location) -> (), onFailure: @escaping(Error) -> ()) {
         if (apiKey.count == 0) {
-            throw UnlCoreError.illegalArgument(messsage: "API key not set");
+            onFailure(UnlCoreError.illegalArgument(messsage: "API key not set"));
+            return;
         }
         
         let endpoint: String = UnlCore.baseUrl + UnlCore.wordsEndpoint + words;
