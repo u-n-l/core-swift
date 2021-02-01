@@ -7,11 +7,10 @@
 //
 
 /**
- Singleton class that provides the unl-core functionalities.
+ Class that provides the unl-core functionalities.
  */
 
-class UnlCore {
-    static let instance = UnlCore();
+final class UnlCore {
     private static let base32 = "0123456789bcdefghjkmnpqrstuvwxyz";
     public static let defaultElevation = Elevation(elevation: 0, elevationType: "floor");
     public static let defaultPrecision = 9;
@@ -22,15 +21,7 @@ class UnlCore {
     private static let locationIdRegex: String = "^[0123456789bcdefghjkmnpqrstuvwxyz]{3,16}[@#]?[0-9]{0,3}$";
     private static let coordinatesRegex: String = "^-?[0-9]{0,2}\\.?[0-9]{0,16},\\s?-?[0-9]{0,3}\\.?[0-9]{0,16}$";
     
-    init() {}
-    
-    /**
-     - Returns: the unique instance of the UnlCore class.
-     */
-    public class func getInstance() -> UnlCore {
-        return instance;
-    }
-    
+    private init() {}
     
     /**
      Encodes latitude/longitude coordinates to locationId, to specified precision.
@@ -43,7 +34,7 @@ class UnlCore {
      - Returns: the locationId of supplied latitude/longitude.
      - Throws: an error if the coordinates are invalid.
      */
-    func encode(lat: Double, lon: Double, precision: Int, elevation: Elevation) throws -> String {
+    static func encode(lat: Double, lon: Double, precision: Int, elevation: Elevation) throws -> String {
         if(lat.isNaN || lon.isNaN){
             throw UnlCoreError.illegalArgument(messsage: "Invalid coordinates or precision");
         }
@@ -98,7 +89,7 @@ class UnlCore {
         let elevationType: String = elevation.elevationType;
         let elevationObject: Elevation = Elevation(elevation: elevationNumber, elevationType: elevationType);
         
-        return try appendElevation(locationIdWithoutElevation: locationId, elevation: elevationObject);
+        return try UnlCore.appendElevation(locationIdWithoutElevation: locationId, elevation: elevationObject);
     }
     
     /**
@@ -110,8 +101,8 @@ class UnlCore {
      - Returns: the locationId of supplied latitude/longitude.
      - Throws: an error if the coordinates are invalid.
      */
-    func encode(lat: Double, lon: Double, precision: Int) throws -> String {
-        return try encode(lat: lat, lon: lon, precision: precision, elevation: UnlCore.defaultElevation );
+    static func encode(lat: Double, lon: Double, precision: Int) throws -> String {
+        return try UnlCore.encode(lat: lat, lon: lon, precision: precision, elevation: UnlCore.defaultElevation );
     }
     
     /**
@@ -123,9 +114,9 @@ class UnlCore {
      - Returns: the locationId of supplied latitude/longitude.
      - Throws: an error if the coordinates are invalid.
      */
-    func encode(lat: Double, lon: Double, elevation: Elevation) throws -> String {
+    static func encode(lat: Double, lon: Double, elevation: Elevation) throws -> String {
         for p in 1..<(UnlCore.defaultPrecision + 1) {
-            let hash: String = try encode(lat: lat, lon: lon, precision: p);
+            let hash: String = try UnlCore.encode(lat: lat, lon: lon, precision: p);
             let posn: PointWithElevation = try decode(locationId: hash);
             
             if(posn.coordinates.lat == lat && posn.coordinates.lon == lon){
@@ -133,7 +124,7 @@ class UnlCore {
             }
         }
         
-        return try encode(lat: lat, lon: lon, precision: UnlCore.defaultPrecision, elevation: elevation);
+        return try UnlCore.encode(lat: lat, lon: lon, precision: UnlCore.defaultPrecision, elevation: elevation);
     }
     
     /**
@@ -144,8 +135,8 @@ class UnlCore {
      - Returns: the locationId of supplied latitude/longitude.
      - Throws: an error if the coordinates are invalid.
      */
-    func encode(lat: Double, lon: Double) throws -> String {
-        return try encode(lat: lat, lon: lon, elevation: UnlCore.defaultElevation);
+    static func encode(lat: Double, lon: Double) throws -> String {
+        return try UnlCore.encode(lat: lat, lon: lon, elevation: UnlCore.defaultElevation);
     }
     
     /**
@@ -156,9 +147,9 @@ class UnlCore {
      - Returns: an instance of PointWithElevation, containing: center of locationId, elevation info and SW/NE latitude/longitude bounds of the locationId.
      - Throws: an error if the locationId is invalid.
      */
-    func decode(locationId: String) throws -> PointWithElevation {
-        let locationIdWithElevation: LocationIdWithElevation = try excludeElevation(locationIdWithElevation: locationId);
-        let boundsWithElevation: BoundsWithElevation = try bounds(locationId: locationIdWithElevation.locationId);
+    static func decode(locationId: String) throws -> PointWithElevation {
+        let locationIdWithElevation: LocationIdWithElevation = try UnlCore.excludeElevation(locationIdWithElevation: locationId);
+        let boundsWithElevation: BoundsWithElevation = try UnlCore.bounds(locationId: locationIdWithElevation.locationId);
         let bounds: Bounds = boundsWithElevation.bounds;
         
         let latMin: Double = bounds.sw.lat;
@@ -191,7 +182,7 @@ class UnlCore {
      - Returns: a string containing locationId and elevation info.
      - Throws: an error if the locationId is invalid.
      */
-    func appendElevation(locationIdWithoutElevation: String, elevation: Elevation) throws -> String {
+    static func appendElevation(locationIdWithoutElevation: String, elevation: Elevation) throws -> String {
         if (locationIdWithoutElevation.count < 0) {
             throw UnlCoreError.illegalArgument(messsage: "Invalid locationId");
         }
@@ -216,7 +207,7 @@ class UnlCore {
      - Returns: an instance of LocationIdWithElevation.
      - Throws: an error if the locationId is invalid.
      */
-    func excludeElevation(locationIdWithElevation: String) throws -> LocationIdWithElevation {
+    static func excludeElevation(locationIdWithElevation: String) throws -> LocationIdWithElevation {
         if (locationIdWithElevation.count == 0) {
             throw UnlCoreError.illegalArgument(messsage: "Invalid locationId");
         }
@@ -252,7 +243,7 @@ class UnlCore {
      - Returns:  an instance of BoundsWithElevation, containing the sw/ne latitude/longitude bounds of specified locationId cell together with the elevation information.
      - Throws: an error if the locationId is invalid.
      */
-    func bounds(locationId: String) throws -> BoundsWithElevation {
+    static func bounds(locationId: String) throws -> BoundsWithElevation {
         let locationIdWithElevation: LocationIdWithElevation = try excludeElevation(locationIdWithElevation: locationId);
         let locationIdWithoutElevation: String = locationIdWithElevation.locationId;
         
@@ -319,7 +310,7 @@ class UnlCore {
      - Returns: the locationId of adjacent cell.
      - Throws: an error if the locationId is invalid.
      */
-    func adjacent(locationId: String, direction: String) throws -> String {
+    static func adjacent(locationId: String, direction: String) throws -> String {
         let directionsString: String = "nsew";
         // based on github.com/davetroy/geohash-js
         
@@ -396,16 +387,16 @@ class UnlCore {
      - Returns: an instance of Neighbour class containing the 8 adjacent cells of the specified locationId: n, ne, e, se, s, sw, w, nw.
      - Throws: an error if the locationId is invalid.
      */
-    func neighbour(locationId: String) throws -> Neighbour {
+    static func neighbour(locationId: String) throws -> Neighbour {
         return Neighbour(
-            n: try adjacent(locationId: locationId, direction: "n"),
-            ne: try adjacent(locationId: adjacent(locationId: locationId, direction: "n"), direction: "e"),
-            e: try adjacent(locationId: locationId, direction: "e"),
-            se: try adjacent(locationId: adjacent(locationId: locationId, direction: "s"), direction: "e"),
-            s: try adjacent(locationId: locationId, direction: "s"),
-            sw: try adjacent(locationId: adjacent(locationId: locationId, direction: "s"), direction: "w"),
-            w: try adjacent(locationId: locationId, direction: "w"),
-            nw: try adjacent(locationId: adjacent(locationId: locationId, direction: "n"), direction: "w"))
+            n: try UnlCore.adjacent(locationId: locationId, direction: "n"),
+            ne: try UnlCore.adjacent(locationId: adjacent(locationId: locationId, direction: "n"), direction: "e"),
+            e: try UnlCore.adjacent(locationId: locationId, direction: "e"),
+            se: try UnlCore.adjacent(locationId: adjacent(locationId: locationId, direction: "s"), direction: "e"),
+            s: try UnlCore.adjacent(locationId: locationId, direction: "s"),
+            sw: try UnlCore.adjacent(locationId: adjacent(locationId: locationId, direction: "s"), direction: "w"),
+            w: try UnlCore.adjacent(locationId: locationId, direction: "w"),
+            nw: try UnlCore.adjacent(locationId: adjacent(locationId: locationId, direction: "n"), direction: "w"))
     }
     
     /**
@@ -417,7 +408,7 @@ class UnlCore {
         - precision: the number of characters to consider for the locationId of a grid cell.
      - Returns: the grid lines.
      */
-    func gridLines(bounds: Bounds, precision: Int) throws -> [[[Double]]] {
+    static func gridLines(bounds: Bounds, precision: Int) throws -> [[[Double]]] {
         var lines: [[[Double]]] = [];
         
         let lonMin: Double = bounds.sw.lon;
@@ -426,14 +417,14 @@ class UnlCore {
         let latMin: Double = bounds.sw.lat;
         let latMax: Double = bounds.ne.lat;
         
-        let swCellLocationId: String = try encode(
+        let swCellLocationId: String = try UnlCore.encode(
             lat: bounds.sw.lat,
             lon: bounds.sw.lon,
             precision: precision,
             elevation: UnlCore.defaultElevation
         );
         
-        let swCellBounds: BoundsWithElevation = try self.bounds(locationId: swCellLocationId);
+        let swCellBounds: BoundsWithElevation = try UnlCore.bounds(locationId: swCellLocationId);
         
         let latStart: Double = swCellBounds.bounds.ne.lat;
         let lonStart: Double = swCellBounds.bounds.ne.lon;
@@ -445,8 +436,8 @@ class UnlCore {
         while (currentCellNorthLatitude <= latMax) {
             lines.append([[lonMin, currentCellNorthLatitude], [lonMax, currentCellNorthLatitude]]);
             
-            currentCellLocationId = try adjacent(locationId: currentCellLocationId, direction: "n");
-            currentCellBounds = try self.bounds(locationId: currentCellLocationId);
+            currentCellLocationId = try UnlCore.adjacent(locationId: currentCellLocationId, direction: "n");
+            currentCellBounds = try UnlCore.bounds(locationId: currentCellLocationId);
             currentCellNorthLatitude = currentCellBounds.bounds.ne.lat;
         }
         
@@ -472,8 +463,8 @@ class UnlCore {
         - bounds: the bound within to return the grid lines
      - Returns: the grid lines.
      */
-    func gridLines(bounds: Bounds) throws -> [[[Double]]] {
-        return try gridLines(bounds: bounds, precision: UnlCore.defaultPrecision);
+    static func gridLines(bounds: Bounds) throws -> [[[Double]]] {
+        return try UnlCore.gridLines(bounds: bounds, precision: UnlCore.defaultPrecision);
     }
     
     /**
@@ -486,7 +477,7 @@ class UnlCore {
      - Returns: an instance of Location class, containing the coordinates, elevation, bounds, geohash and words.
      - Throws: an error if the api key string is empty, location is invalid or the call to location endpoint is unsuccessful.
      */
-    func toWords(location: String, apiKey: String, onSuccess: @escaping (Location) -> (), onFailure: @escaping(Error) -> ()) {
+    static func toWords(location: String, apiKey: String, onSuccess: @escaping (Location) -> (), onFailure: @escaping(Error) -> ()) {
         if(apiKey.count == 0){
             onFailure(UnlCoreError.illegalArgument(messsage: "API key not set"));
             return;
@@ -527,7 +518,7 @@ class UnlCore {
      - Returns: an instance of Location class, containing the coordinates, elevation, bounds, geohash and words.
      - Throws: an error if the api key string is empty or the call to location endpoint is unsuccessful.
      */
-    func words(words: String, apiKey: String, onSuccess: @escaping (Location) -> (), onFailure: @escaping(Error) -> ()) {
+    static func words(words: String, apiKey: String, onSuccess: @escaping (Location) -> (), onFailure: @escaping(Error) -> ()) {
         if (apiKey.count == 0) {
             onFailure(UnlCoreError.illegalArgument(messsage: "API key not set"));
             return;
