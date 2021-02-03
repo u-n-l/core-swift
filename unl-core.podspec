@@ -1,6 +1,5 @@
 Pod::Spec.new do |spec|
     spec.name         = "unl-core"
-    spec.version      = "0.0.1"
     spec.license      = { :type => 'Apache License, Version 2.0', :file => "LICENSE" }
     spec.homepage     = "https://github.com/u-n-l/core-swift"
     spec.authors       = { "UNL Global" => "support@unl.global" }
