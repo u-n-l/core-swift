@@ -4,8 +4,8 @@ Pod::Spec.new do |spec|
     spec.license      = { :type => 'Apache License, Version 2.0', :file => "LICENSE" }
     spec.homepage     = "https://github.com/u-n-l/core-swift"
     spec.authors       = { "UNL Global" => "support@unl.global" }
-    spec.source       = { :git => "https://github.com/u-n-l/core-swift.git", :tag => "0.0.1" }
-    spec.source_files  = "core", "core/**/*.{h,m}"
+    spec.source       = { :git => "https://github.com/u-n-l/core-swift.git", :tag => ENV['LIB_VERSION'] }
+    spec.source_files  = "core", "core/**/*.{h,m,swift}"
     spec.summary = "The core Swift SDK for UNL Location Services"
     spec.ios.deployment_target  = '8'
     spec.osx.deployment_target  = '10.9'
