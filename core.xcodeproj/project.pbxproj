@@ -34,6 +34,7 @@
 
 /* Begin PBXFileReference section */
 		235343FA25C17DC6009AF3C9 /* LocationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationService.swift; sourceTree = "<group>"; };
+		236F593C25CD99130015D5A0 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		238EC9E025C01E1400B07933 /* Location.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Location.swift; sourceTree = "<group>"; };
 		23A8FEDD25C2CF27005BE37F /* UnlCoreError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnlCoreError.swift; sourceTree = "<group>"; };
 		23BDF60525BAF63F005FF61D /* UnlCore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnlCore.swift; sourceTree = "<group>"; };
@@ -73,6 +74,7 @@
 		23F96BC225B9BC6D001E792B = {
 			isa = PBXGroup;
 			children = (
+				236F593C25CD99130015D5A0 /* README.md */,
 				23F96BCE25B9BC6D001E792B /* core */,
 				23F96BD925B9BC6D001E792B /* coreTests */,
 				23F96BCD25B9BC6D001E792B /* Products */,
