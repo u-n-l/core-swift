@@ -15,7 +15,6 @@
 		23BDF60C25BB096D005FF61D /* Bounds.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23BDF60B25BB096D005FF61D /* Bounds.swift */; };
 		23BDF60E25BB09BB005FF61D /* Point.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23BDF60D25BB09BB005FF61D /* Point.swift */; };
 		23BDF61025BB0A03005FF61D /* PointWithElevation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23BDF60F25BB0A03005FF61D /* PointWithElevation.swift */; };
-		23BDF61225BB0A15005FF61D /* BoundsWithElevation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23BDF61125BB0A15005FF61D /* BoundsWithElevation.swift */; };
 		23BDF61425BB0B6E005FF61D /* LocationIdWithElevation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23BDF61325BB0B6E005FF61D /* LocationIdWithElevation.swift */; };
 		23BDF61625BB0BAD005FF61D /* Neighbour.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23BDF61525BB0BAD005FF61D /* Neighbour.swift */; };
 		23F96BD625B9BC6D001E792B /* core.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 23F96BCC25B9BC6D001E792B /* core.framework */; };
@@ -42,7 +41,6 @@
 		23BDF60B25BB096D005FF61D /* Bounds.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bounds.swift; sourceTree = "<group>"; };
 		23BDF60D25BB09BB005FF61D /* Point.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Point.swift; sourceTree = "<group>"; };
 		23BDF60F25BB0A03005FF61D /* PointWithElevation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PointWithElevation.swift; sourceTree = "<group>"; };
-		23BDF61125BB0A15005FF61D /* BoundsWithElevation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoundsWithElevation.swift; sourceTree = "<group>"; };
 		23BDF61325BB0B6E005FF61D /* LocationIdWithElevation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationIdWithElevation.swift; sourceTree = "<group>"; };
 		23BDF61525BB0BAD005FF61D /* Neighbour.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Neighbour.swift; sourceTree = "<group>"; };
 		23F96BCC25B9BC6D001E792B /* core.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = core.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -102,7 +100,6 @@
 				23BDF60F25BB0A03005FF61D /* PointWithElevation.swift */,
 				23BDF61325BB0B6E005FF61D /* LocationIdWithElevation.swift */,
 				23BDF61525BB0BAD005FF61D /* Neighbour.swift */,
-				23BDF61125BB0A15005FF61D /* BoundsWithElevation.swift */,
 				238EC9E025C01E1400B07933 /* Location.swift */,
 				235343FA25C17DC6009AF3C9 /* LocationService.swift */,
 				23A8FEDD25C2CF27005BE37F /* UnlCoreError.swift */,
@@ -233,7 +230,6 @@
 				23BDF60A25BB08A9005FF61D /* Elevation.swift in Sources */,
 				235343FB25C17DC6009AF3C9 /* LocationService.swift in Sources */,
 				23BDF61425BB0B6E005FF61D /* LocationIdWithElevation.swift in Sources */,
-				23BDF61225BB0A15005FF61D /* BoundsWithElevation.swift in Sources */,
 				23A8FEDE25C2CF27005BE37F /* UnlCoreError.swift in Sources */,
 				238EC9E125C01E1400B07933 /* Location.swift in Sources */,
 				23BDF60E25BB09BB005FF61D /* Point.swift in Sources */,

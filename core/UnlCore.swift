@@ -27,10 +27,10 @@ final class UnlCore {
      Encodes latitude/longitude coordinates to locationId, to specified precision.
      Elevation information is specified in elevation parameter.
      - Parameters:
-        - lat: the latitude in degrees.
-        - lon: the longitude in degrees.
-        - precision: the number of characters in resulting locationId.
-        - elevation: the elevation object, containing the elevation number and type: 'floor' | 'heightincm'.
+     - lat: the latitude in degrees.
+     - lon: the longitude in degrees.
+     - precision: the number of characters in resulting locationId.
+     - elevation: the elevation object, containing the elevation number and type: 'floor' | 'heightincm'.
      - Returns: the locationId of supplied latitude/longitude.
      - Throws: an error if the coordinates are invalid.
      */
@@ -95,9 +95,9 @@ final class UnlCore {
     /**
      Encodes latitude/longitude coordinates to locationId, to specified precision.
      - Parameters:
-        - lat: the latitude in degrees.
-        - lon: the longitude in degrees.
-        - precision: the number of characters in resulting locationId.
+     - lat: the latitude in degrees.
+     - lon: the longitude in degrees.
+     - precision: the number of characters in resulting locationId.
      - Returns: the locationId of supplied latitude/longitude.
      - Throws: an error if the coordinates are invalid.
      */
@@ -108,9 +108,9 @@ final class UnlCore {
     /**
      Encodes latitude/longitude coordinates to locationId, to default precision: 9.
      - Parameters:
-        - lat: the latitude in degrees.
-        - lon: the longitude in degrees.
-        - elevation: the elevation object, containing the elevation number and type: 'floor' | 'heightincm'.
+     - lat: the latitude in degrees.
+     - lon: the longitude in degrees.
+     - elevation: the elevation object, containing the elevation number and type: 'floor' | 'heightincm'.
      - Returns: the locationId of supplied latitude/longitude.
      - Throws: an error if the coordinates are invalid.
      */
@@ -130,8 +130,8 @@ final class UnlCore {
     /**
      Encodes latitude/longitude coordinates to locationId, to default precision: 9.
      - Parameters:
-        - lat: the latitude in degrees.
-        - lon: the longitude in degrees.
+     - lat: the latitude in degrees.
+     - lon: the longitude in degrees.
      - Returns: the locationId of supplied latitude/longitude.
      - Throws: an error if the coordinates are invalid.
      */
@@ -143,20 +143,19 @@ final class UnlCore {
      Decodes locationId to latitude/longitude and elevation (location is approximate centre of locationId cell,
      to reasonable precision.
      - Parameters:
-        - locationId: the locationId string to be converted to latitude/longitude.
-     - Returns: an instance of PointWithElevation, containing: center of locationId, elevation info and SW/NE latitude/longitude bounds of the locationId.
+     - locationId: the locationId string to be converted to latitude/longitude.
+     - Returns: an instance of PointWithElevation, containing: center of locationId, elevation info and n, e, s, w latitude/longitude bounds of the locationId.
      - Throws: an error if the locationId is invalid.
      */
     static func decode(locationId: String) throws -> PointWithElevation {
         let locationIdWithElevation: LocationIdWithElevation = try UnlCore.excludeElevation(locationIdWithElevation: locationId);
-        let boundsWithElevation: BoundsWithElevation = try UnlCore.bounds(locationId: locationIdWithElevation.locationId);
-        let bounds: Bounds = boundsWithElevation.bounds;
+        let bounds: Bounds = try UnlCore.bounds(locationId: locationIdWithElevation.locationId);
         
-        let latMin: Double = bounds.sw.lat;
-        let lonMin: Double = bounds.sw.lon;
+        let latMin: Double = bounds.s;
+        let lonMin: Double = bounds.w;
         
-        let latMax: Double = bounds.ne.lat;
-        let lonMax:Double = bounds.ne.lon;
+        let latMax: Double = bounds.n;
+        let lonMax:Double = bounds.e;
         
         //cell center
         var lat: Double = (latMin + latMax) / 2.0;
@@ -169,7 +168,7 @@ final class UnlCore {
         lon = (lon * pow(10.0, Double(lonPrecision))).rounded()/pow(10.0, Double(lonPrecision));
         
         let point: Point = Point(lat: lat, lon: lon);
-        return PointWithElevation(coordinates: point, elevation: locationIdWithElevation.elevation, bounds: boundsWithElevation);
+        return PointWithElevation(coordinates: point, elevation: locationIdWithElevation.elevation, bounds: bounds);
         
     }
     
@@ -177,8 +176,8 @@ final class UnlCore {
      Adds elevation chars and elevation.
      It is mainly used by internal functions.
      - Parameters:
-        - locationIdWithoutElevation: the locationId without elevation chars.
-        - elevation: the instance of Elevation, containing the height of the elevation and elevation type (floor | heightincm) as attributes.
+     - locationIdWithoutElevation: the locationId without elevation chars.
+     - elevation: the instance of Elevation, containing the height of the elevation and elevation type (floor | heightincm) as attributes.
      - Returns: a string containing locationId and elevation info.
      - Throws: an error if the locationId is invalid.
      */
@@ -203,7 +202,7 @@ final class UnlCore {
      Returns locationId and elevation properties.
      It is mainly used by internal functions.
      - Parameters:
-        - locationIdWithoutElevation: the locationId without elevation chars.
+     - locationIdWithoutElevation: the locationId without elevation chars.
      - Returns: an instance of LocationIdWithElevation.
      - Throws: an error if the locationId is invalid.
      */
@@ -237,13 +236,13 @@ final class UnlCore {
     
     
     /**
-     Returns SW/NE latitude/longitude bounds of specified locationId cell.
+     Returns n, e, s, w latitude/longitude bounds of specified locationId cell.
      - Parameters:
-        - locationId: the cell that bounds are required of.
-     - Returns:  an instance of BoundsWithElevation, containing the sw/ne latitude/longitude bounds of specified locationId cell together with the elevation information.
+     - locationId: the cell that bounds are required of.
+     - Returns:  an instance of Bounds, containing the n, e, s, w bounds of specified locationId cell together with the elevation information.
      - Throws: an error if the locationId is invalid.
      */
-    static func bounds(locationId: String) throws -> BoundsWithElevation {
+    static func bounds(locationId: String) throws -> Bounds {
         let locationIdWithElevation: LocationIdWithElevation = try excludeElevation(locationIdWithElevation: locationId);
         let locationIdWithoutElevation: String = locationIdWithElevation.locationId;
         
@@ -294,19 +293,14 @@ final class UnlCore {
             }
         }
         
-        let sw: Point = Point(lat: latMin, lon: lonMin);
-        let ne: Point = Point(lat: latMax, lon: lonMax);
-        let bounds: Bounds = Bounds(sw: sw, ne: ne);
-        let elevation = Elevation(elevation: locationIdWithElevation.elevation.elevation, elevationType: locationIdWithElevation.elevation.elevationType);
-        
-        return BoundsWithElevation(bounds: bounds, elevation: elevation);
+        return  Bounds(n: latMax, e: lonMax, s: latMin, w: lonMin);
     }
     
     /**
      Determines adjacent cell in given direction.
      - Parameters:
-        - locationId:the cell to which adjacent cell is required.
-        - direction: the direction from locationId (N/S/E/W).
+     - locationId:the cell to which adjacent cell is required.
+     - direction: the direction from locationId (N/S/E/W).
      - Returns: the locationId of adjacent cell.
      - Throws: an error if the locationId is invalid.
      */
@@ -383,7 +377,7 @@ final class UnlCore {
     /**
      Returns all 8 adjacent cells to specified locationId.
      - Parameters:
-        - locationId:the locationId neighbours are required of.
+     - locationId:the locationId neighbours are required of.
      - Returns: an instance of Neighbour class containing the 8 adjacent cells of the specified locationId: n, ne, e, se, s, sw, w, nw.
      - Throws: an error if the locationId is invalid.
      */
@@ -401,36 +395,36 @@ final class UnlCore {
     
     /**
      Returns the vertical and horizontal lines that can be used to draw a UNL grid in the specified
-     SW/NE latitude/longitude bounds and precision. Each line is represented by an array of two
+     n, e, s, w bounds and precision. Each line is represented by an array of two
      coordinates in the format: [[startLon, startLat], [endLon, endLat]].
      - Parameters:
-        - bounds: the bound within to return the grid lines.
-        - precision: the number of characters to consider for the locationId of a grid cell.
+     - bounds: the bound within to return the grid lines.
+     - precision: the number of characters to consider for the locationId of a grid cell.
      - Returns: the grid lines.
      */
     static func gridLines(bounds: Bounds, precision: Int) throws -> [[[Double]]] {
         var lines: [[[Double]]] = [];
         
-        let lonMin: Double = bounds.sw.lon;
-        let lonMax: Double = bounds.ne.lon;
+        let lonMin: Double = bounds.w;
+        let lonMax: Double = bounds.e;
         
-        let latMin: Double = bounds.sw.lat;
-        let latMax: Double = bounds.ne.lat;
+        let latMin: Double = bounds.s;
+        let latMax: Double = bounds.n;
         
         let swCellLocationId: String = try UnlCore.encode(
-            lat: bounds.sw.lat,
-            lon: bounds.sw.lon,
+            lat: bounds.s,
+            lon: bounds.w,
             precision: precision,
             elevation: UnlCore.defaultElevation
         );
         
-        let swCellBounds: BoundsWithElevation = try UnlCore.bounds(locationId: swCellLocationId);
+        let swCellBounds: Bounds = try UnlCore.bounds(locationId: swCellLocationId);
         
-        let latStart: Double = swCellBounds.bounds.ne.lat;
-        let lonStart: Double = swCellBounds.bounds.ne.lon;
+        let latStart: Double = swCellBounds.n;
+        let lonStart: Double = swCellBounds.e;
         
         var currentCellLocationId: String = swCellLocationId;
-        var currentCellBounds: BoundsWithElevation = swCellBounds;
+        var currentCellBounds: Bounds = swCellBounds;
         var currentCellNorthLatitude: Double = latStart;
         
         while (currentCellNorthLatitude <= latMax) {
@@ -438,7 +432,7 @@ final class UnlCore {
             
             currentCellLocationId = try UnlCore.adjacent(locationId: currentCellLocationId, direction: "n");
             currentCellBounds = try UnlCore.bounds(locationId: currentCellLocationId);
-            currentCellNorthLatitude = currentCellBounds.bounds.ne.lat;
+            currentCellNorthLatitude = currentCellBounds.n;
         }
         
         currentCellLocationId = swCellLocationId;
@@ -449,7 +443,7 @@ final class UnlCore {
             
             currentCellLocationId = try adjacent(locationId: currentCellLocationId, direction: "e");
             currentCellBounds = try self.bounds(locationId: currentCellLocationId);
-            currentCellEastLongitude = currentCellBounds.bounds.ne.lon;
+            currentCellEastLongitude = currentCellBounds.e;
         }
         
         return lines;
@@ -457,10 +451,10 @@ final class UnlCore {
     
     /**
      Returns the vertical and horizontal lines that can be used to draw a UNL grid in the specified
-     SW/NE latitude/longitude bounds, using the default precision: 9. Each line is represented by an array of two
+     n, e, s, w latitude/longitude bounds, using the default precision: 9. Each line is represented by an array of two
      coordinates in the format: [[startLon, startLat], [endLon, endLat]].
      - Parameters:
-        - bounds: the bound within to return the grid lines
+     - bounds: the bound within to return the grid lines
      - Returns: the grid lines.
      */
     static func gridLines(bounds: Bounds) throws -> [[[Double]]] {
@@ -472,8 +466,8 @@ final class UnlCore {
      corresponding to the location string (id or lat-lon coordinates). It requires the api key used to access
      the location APIs.
      - Parameters:
-        - location: the location (Id or lat-lon coordinates) of the point for which you would like the address.
-        - apiKey: the UNL API key used to access the location APIs.
+     - location: the location (Id or lat-lon coordinates) of the point for which you would like the address.
+     - apiKey: the UNL API key used to access the location APIs.
      - Returns: an instance of Location class, containing the coordinates, elevation, bounds, geohash and words.
      - Throws: an error if the api key string is empty, location is invalid or the call to location endpoint is unsuccessful.
      */
@@ -513,8 +507,8 @@ final class UnlCore {
      corresponding to the words string. It requires the api key used to access
      the location APIs.
      - Parameters:
-        - words: the words representing the point for which you would like the coordinates.
-        - apiKey: the UNL API key used to access the location APIs.
+     - words: the words representing the point for which you would like the coordinates.
+     - apiKey: the UNL API key used to access the location APIs.
      - Returns: an instance of Location class, containing the coordinates, elevation, bounds, geohash and words.
      - Throws: an error if the api key string is empty or the call to location endpoint is unsuccessful.
      */

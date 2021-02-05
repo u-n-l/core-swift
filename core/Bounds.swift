@@ -7,27 +7,35 @@
 //
 
 public class Bounds: Equatable, Decodable {
-    public let sw: Point;
-    public let ne: Point;
+    public let n: Double;
+    public let e: Double;
+    public let s: Double;
+    public let w: Double;
     
-    init(sw: Point, ne: Point){
-        self.sw = sw;
-        self.ne = ne;
+    init(n: Double, e: Double, s: Double, w: Double){
+        self.n = n;
+        self.e = e;
+        self.s = s;
+        self.w = w;
     }
     
     enum CodingKeys: String, CodingKey {
-        case sw = "sw"
-        case ne = "ne"
+        case n = "n"
+        case e = "e"
+        case s = "s"
+        case w = "w"
     }
     
     required public init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self);
         
-        sw = try values.decode(Point.self, forKey: CodingKeys.sw)
-        ne = try values.decode(Point.self, forKey: CodingKeys.ne)
+        n = try values.decode(Double.self, forKey: CodingKeys.n)
+        e = try values.decode(Double.self, forKey: CodingKeys.e)
+        s = try values.decode(Double.self, forKey: CodingKeys.s)
+        w = try values.decode(Double.self, forKey: CodingKeys.w)
     }
     
     public static func == (lhs: Bounds, rhs: Bounds) -> Bool {
-        return lhs.sw == rhs.sw && lhs.ne == rhs.ne;
+        return lhs.n == rhs.n && lhs.e == rhs.e && lhs.s == rhs.s && lhs.w == rhs.w;
     }
 }
