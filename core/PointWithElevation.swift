@@ -9,9 +9,9 @@
 class PointWithElevation: Equatable {
     public let coordinates: Point;
     public let elevation: Elevation;
-    public let bounds: BoundsWithElevation;
+    public let bounds: Bounds;
     
-    init(coordinates: Point, elevation: Elevation, bounds: BoundsWithElevation){
+    init(coordinates: Point, elevation: Elevation, bounds: Bounds){
         self.coordinates = coordinates;
         self.elevation = elevation;
         self.bounds = bounds;

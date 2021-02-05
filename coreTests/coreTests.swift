@@ -37,63 +37,103 @@ class coreTests: XCTestCase {
         /* decodes Jutland */
         XCTAssertEqual(try UnlCore.decode(locationId: "u4pruy"),
                        PointWithElevation(coordinates: Point(lat: 57.648, lon: 10.41), elevation: UnlCore.defaultElevation,
-                                          bounds: BoundsWithElevation(bounds: Bounds(sw: Point(lat: 57.645263671875, lon: 10.404052734375), ne: Point(lat: 57.6507568359375, lon: 10.4150390625)), elevation: UnlCore.defaultElevation)
+                                          bounds: Bounds(
+                                            n: 57.6507568359375,
+                                            e: 10.4150390625,
+                                            s: 57.645263671875,
+                                            w: 10.404052734375)
             ), "decode Jutland result is incorrect"
         );
         
         /* decodes Justland floor 3 */
         XCTAssertEqual(try UnlCore.decode(locationId: "u4pruy@3"),
                        PointWithElevation(coordinates: Point(lat: 57.648, lon: 10.41), elevation: Elevation(elevation: 3, elevationType: "floor"),
-                                          bounds: BoundsWithElevation(bounds: Bounds(sw: Point(lat: 57.645263671875, lon: 10.404052734375), ne: Point(lat: 57.6507568359375, lon: 10.4150390625)), elevation: UnlCore.defaultElevation)
+                                          bounds: Bounds(
+                                            n: 57.6507568359375,
+                                            e: 10.4150390625,
+                                            s: 57.645263671875,
+                                            w:10.404052734375)
             ), "decode Jutland floor 3 result is incorrect"
         );
         
         /* decodes Justland floor 0 */
         XCTAssertEqual(try UnlCore.decode(locationId: "u4pruy@0"),
                        PointWithElevation(coordinates: Point(lat: 57.648, lon: 10.41), elevation: UnlCore.defaultElevation,
-                                          bounds: BoundsWithElevation(bounds: Bounds(sw: Point(lat: 57.645263671875, lon: 10.404052734375), ne: Point(lat: 57.6507568359375, lon: 10.4150390625)), elevation: UnlCore.defaultElevation)
+                                          bounds: Bounds(
+                                            n: 57.6507568359375,
+                                            e: 10.4150390625,
+                                            s: 57.645263671875,
+                                            w:10.404052734375)
             ), "decode Jutland floor 0 result is incorrect"
         );
         
         /* decodes Justland floor -2 */
         XCTAssertEqual(try UnlCore.decode(locationId: "u4pruy@-2"),
                        PointWithElevation(coordinates: Point(lat: 57.648, lon: 10.41), elevation: Elevation(elevation: -2, elevationType: "floor"),
-                                          bounds: BoundsWithElevation(bounds: Bounds(sw: Point(lat: 57.645263671875, lon: 10.404052734375), ne: Point(lat: 57.6507568359375, lon: 10.4150390625)), elevation: UnlCore.defaultElevation)
+                                          bounds: Bounds(
+                                            n: 57.6507568359375,
+                                            e: 10.4150390625,
+                                            s: 57.645263671875,
+                                            w:10.404052734375)
             ), "decode Jutland floor -2 result is incorrect"
         );
         
         /* decodes Jutland heightincm 87 */
         XCTAssertEqual(try UnlCore.decode(locationId: "u4pruy#87"),
                        PointWithElevation(coordinates: Point(lat: 57.648, lon: 10.41), elevation: Elevation(elevation: 87, elevationType: "heightincm"),
-                                          bounds: BoundsWithElevation(bounds: Bounds(sw: Point(lat: 57.645263671875, lon: 10.404052734375), ne: Point(lat: 57.6507568359375, lon: 10.4150390625)), elevation: UnlCore.defaultElevation)
+                                          bounds: Bounds(
+                                            n: 57.6507568359375,
+                                            e: 10.4150390625,
+                                            s: 57.645263671875,
+                                            w:10.404052734375
+                        )
             ), "decode Jutland heightincm 87 result is incorrect"
         );
         
         /* decodes Jutland heightincm 0 */
         XCTAssertEqual(try UnlCore.decode(locationId: "u4pruy#0"),
                        PointWithElevation(coordinates: Point(lat: 57.648, lon: 10.41), elevation: Elevation(elevation: 0, elevationType: "heightincm"),
-                                          bounds: BoundsWithElevation(bounds: Bounds(sw: Point(lat: 57.645263671875, lon: 10.404052734375), ne: Point(lat: 57.6507568359375, lon: 10.4150390625)), elevation: UnlCore.defaultElevation)
+                                          bounds: Bounds(
+                                            n: 57.6507568359375,
+                                            e: 10.4150390625,
+                                            s: 57.645263671875,
+                                            w:10.404052734375
+                        )
             ), "decode Jutland heightincm 0 result is incorrect"
         );
         
         /* decodes Curitiba */
         XCTAssertEqual(try UnlCore.decode(locationId: "6gkzwgjz"),
                        PointWithElevation(coordinates: Point(lat: -25.38262, lon: -49.26561), elevation: UnlCore.defaultElevation,
-                                          bounds: BoundsWithElevation(bounds: Bounds(sw: Point(lat: -25.382709503173828, lon: -49.265785217285156), ne: Point(lat: -25.382537841796875, lon: -49.26544189453125)), elevation: UnlCore.defaultElevation)
+                                          bounds: Bounds(
+                                            n: -25.382537841796875,
+                                            e: -49.26544189453125,
+                                            s: -25.382709503173828,
+                                            w:-49.265785217285156)
             ), "decode Curitiba result is incorrect"
         );
         
         /* decodes Curitiba floor 5 */
         XCTAssertEqual(try UnlCore.decode(locationId: "6gkzwgjz@5"),
                        PointWithElevation(coordinates: Point(lat: -25.38262, lon: -49.26561), elevation: Elevation(elevation: 5,elevationType: "floor"),
-                                          bounds: BoundsWithElevation(bounds: Bounds(sw: Point(lat: -25.382709503173828, lon: -49.265785217285156), ne: Point(lat: -25.382537841796875, lon: -49.26544189453125)), elevation: UnlCore.defaultElevation)
+                                          bounds: Bounds(
+                                            n: -25.382537841796875,
+                                            e: -49.26544189453125,
+                                            s: -25.382709503173828,
+                                            w:-49.265785217285156
+                        )
             ), "decode Curitiba floor 5 result is incorrect"
         );
         
         /* decodes Curitiba heightincm 90 */
         XCTAssertEqual(try UnlCore.decode(locationId: "6gkzwgjz#90"),
                        PointWithElevation(coordinates: Point(lat: -25.38262, lon: -49.26561), elevation: Elevation(elevation: 90,elevationType: "heightincm"),
-                                          bounds: BoundsWithElevation(bounds: Bounds(sw: Point(lat: -25.382709503173828, lon: -49.265785217285156), ne: Point(lat: -25.382537841796875, lon: -49.26544189453125)), elevation: UnlCore.defaultElevation)
+                                          bounds: Bounds(
+                                            n: -25.382537841796875,
+                                            e: -49.26544189453125,
+                                            s: -25.382709503173828,
+                                            w:-49.265785217285156
+                        )
             ), "decode Curitiba heightincm 90 result is incorrect"
         );
     }
@@ -174,19 +214,33 @@ class coreTests: XCTestCase {
     func testGridLines() {
         /* retrieves grid lines with precision 9 */
         XCTAssert(
-            try UnlCore.gridLines(bounds: Bounds(sw: Point(lat: 46.77210936378606, lon: 23.595436614661565), ne: Point(lat: 46.77227194246396, lon: 23.59560827603795)), precision: 9).count == 7,
+            try UnlCore.gridLines(bounds: Bounds(
+                n:  46.77227194246396,
+                e: 23.59560827603795,
+                s: 46.77210936378606,
+                w:23.595436614661565), precision: 9).count == 7,
             "gridLines with precision 9 result is incorrect"
         );
         
         /* retrieves grid lines with no precision specified (default 9) */
         XCTAssert(
-            try UnlCore.gridLines(bounds: Bounds(sw: Point(lat: 46.77210936378606, lon: 23.595436614661565), ne: Point(lat: 46.77227194246396, lon: 23.59560827603795))).count == 7,
+            try UnlCore.gridLines(bounds: Bounds(
+                n:  46.77227194246396,
+                e: 23.59560827603795,
+                s: 46.77210936378606,
+                w:23.595436614661565
+            )).count == 7,
             "gridLines with no precision specified result is incorrect"
         );
         
         /* retrieves grid lines with precision 12 */
         XCTAssert(
-            try UnlCore.gridLines(bounds: Bounds(sw: Point(lat: 46.77210936378606, lon: 23.595436614661565), ne: Point(lat: 46.77227194246396, lon: 23.59560827603795)), precision: 12).count == 1481,
+            try UnlCore.gridLines(bounds: Bounds(
+                n:  46.77227194246396,
+                e: 23.59560827603795,
+                s: 46.77210936378606,
+                w:23.595436614661565
+            ), precision: 12).count == 1481,
             "gridLines with precision 12 result is incorrect"
         );
     }
