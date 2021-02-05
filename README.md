@@ -316,7 +316,7 @@ Returns a string:
 
 ```swift
 "gbpb@5"
-````
+```
 
 ### neighbours
 
@@ -398,7 +398,6 @@ It requires the api key used to access
 the location APIs.  Returns the location object, which encapsulates the coordinates, elevation, bounds, geohash and words,
 corresponding to the location string (id or lat-lon coordinates) in case of sucess. onFailure callback is called if the request to the locationAPI is not sucessful.
 
-```swift
 ```swift
 public static func toWords(location: String, apiKey: String, onSuccess: @escaping (Location) -> (), onFailure: @escaping(Error) -> ())
 ```
