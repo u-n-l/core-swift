@@ -101,7 +101,7 @@ public class LocationIdWithElevation: Equatable {
 ### Neighbours 
 
 ```swift
-public class Neighbour: Equatable {
+public class Neighbours: Equatable {
     public let n: String;
     public let ne: String;
     public let e: String;
@@ -323,7 +323,7 @@ Returns a string:
 Returns all 8 adjacent cells to specified locationId.
 
 ```swift
-public static func neighbour(locationId: String) throws -> Neighbour
+public static func neighbours(locationId: String) throws -> Neighbours
 ```
 
 Example:
@@ -332,7 +332,7 @@ Example:
 UnlCore.neighbours(locationId: "ezzz");
 ```
 
-Returns a Neighbour object, containing the 8 adjacent cells to specified locationId. Below is the JSON representation of the object:
+Returns a Neighbours object, containing the 8 adjacent cells to specified locationId. Below is the JSON representation of the object:
 
 ```swift
 {
