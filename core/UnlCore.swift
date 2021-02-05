@@ -10,7 +10,7 @@
  Class that provides the unl-core functionalities.
  */
 
-final class UnlCore {
+public final class UnlCore {
     private static let base32 = "0123456789bcdefghjkmnpqrstuvwxyz";
     public static let defaultElevation = Elevation(elevation: 0, elevationType: "floor");
     public static let defaultPrecision = 9;
@@ -338,7 +338,7 @@ final class UnlCore {
             directionNumber = 0;
         }
         
-        let neighbour: [[String]] = [
+        let neighbours: [[String]] = [
             ["p0r21436x8zb9dcf5h7kjnmqesgutwvy", "bc01fg45238967deuvhjyznpkmstqrwx"], //n
             ["14365h7k9dcfesgujnmqp0r2twvyx8zb", "238967debc01fg45kmstqrwxuvhjyznp"], //s
             ["bc01fg45238967deuvhjyznpkmstqrwx", "p0r21436x8zb9dcf5h7kjnmqesgutwvy"], //e
@@ -362,8 +362,8 @@ final class UnlCore {
         }
         
         // append letter for direction to parent
-        let firstIndex = neighbour[directionNumber][type].firstIndex(of: lastCh);
-        let idx: Int = neighbour[directionNumber][type].distance(from: neighbour[directionNumber][type].startIndex, to: firstIndex!);
+        let firstIndex = neighbours[directionNumber][type].firstIndex(of: lastCh);
+        let idx: Int = neighbours[directionNumber][type].distance(from: neighbours[directionNumber][type].startIndex, to: firstIndex!);
         
         
         let nextLocationId: String = parent + String(UnlCore.base32[UnlCore.base32.index(UnlCore.base32.startIndex, offsetBy: idx)]);
@@ -378,11 +378,11 @@ final class UnlCore {
      Returns all 8 adjacent cells to specified locationId.
      - Parameters:
      - locationId:the locationId neighbours are required of.
-     - Returns: an instance of Neighbour class containing the 8 adjacent cells of the specified locationId: n, ne, e, se, s, sw, w, nw.
+     - Returns: an instance of Neighbours class containing the 8 adjacent cells of the specified locationId: n, ne, e, se, s, sw, w, nw.
      - Throws: an error if the locationId is invalid.
      */
-    static func neighbour(locationId: String) throws -> Neighbour {
-        return Neighbour(
+    static func neighbours(locationId: String) throws -> Neighbours {
+        return Neighbours(
             n: try UnlCore.adjacent(locationId: locationId, direction: "n"),
             ne: try UnlCore.adjacent(locationId: adjacent(locationId: locationId, direction: "n"), direction: "e"),
             e: try UnlCore.adjacent(locationId: locationId, direction: "e"),

@@ -16,7 +16,7 @@
 		23BDF60E25BB09BB005FF61D /* Point.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23BDF60D25BB09BB005FF61D /* Point.swift */; };
 		23BDF61025BB0A03005FF61D /* PointWithElevation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23BDF60F25BB0A03005FF61D /* PointWithElevation.swift */; };
 		23BDF61425BB0B6E005FF61D /* LocationIdWithElevation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23BDF61325BB0B6E005FF61D /* LocationIdWithElevation.swift */; };
-		23BDF61625BB0BAD005FF61D /* Neighbour.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23BDF61525BB0BAD005FF61D /* Neighbour.swift */; };
+		23BDF61625BB0BAD005FF61D /* Neighbours.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23BDF61525BB0BAD005FF61D /* Neighbours.swift */; };
 		23F96BD625B9BC6D001E792B /* core.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 23F96BCC25B9BC6D001E792B /* core.framework */; };
 		23F96BDB25B9BC6D001E792B /* coreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23F96BDA25B9BC6D001E792B /* coreTests.swift */; };
 		23F96BDD25B9BC6D001E792B /* core.h in Headers */ = {isa = PBXBuildFile; fileRef = 23F96BCF25B9BC6D001E792B /* core.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -42,7 +42,7 @@
 		23BDF60D25BB09BB005FF61D /* Point.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Point.swift; sourceTree = "<group>"; };
 		23BDF60F25BB0A03005FF61D /* PointWithElevation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PointWithElevation.swift; sourceTree = "<group>"; };
 		23BDF61325BB0B6E005FF61D /* LocationIdWithElevation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationIdWithElevation.swift; sourceTree = "<group>"; };
-		23BDF61525BB0BAD005FF61D /* Neighbour.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Neighbour.swift; sourceTree = "<group>"; };
+		23BDF61525BB0BAD005FF61D /* Neighbours.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Neighbours.swift; sourceTree = "<group>"; };
 		23F96BCC25B9BC6D001E792B /* core.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = core.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		23F96BCF25B9BC6D001E792B /* core.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = core.h; sourceTree = "<group>"; };
 		23F96BD025B9BC6D001E792B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -99,7 +99,7 @@
 				23BDF60D25BB09BB005FF61D /* Point.swift */,
 				23BDF60F25BB0A03005FF61D /* PointWithElevation.swift */,
 				23BDF61325BB0B6E005FF61D /* LocationIdWithElevation.swift */,
-				23BDF61525BB0BAD005FF61D /* Neighbour.swift */,
+				23BDF61525BB0BAD005FF61D /* Neighbours.swift */,
 				238EC9E025C01E1400B07933 /* Location.swift */,
 				235343FA25C17DC6009AF3C9 /* LocationService.swift */,
 				23A8FEDD25C2CF27005BE37F /* UnlCoreError.swift */,
@@ -226,7 +226,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				23BDF61625BB0BAD005FF61D /* Neighbour.swift in Sources */,
+				23BDF61625BB0BAD005FF61D /* Neighbours.swift in Sources */,
 				23BDF60A25BB08A9005FF61D /* Elevation.swift in Sources */,
 				235343FB25C17DC6009AF3C9 /* LocationService.swift in Sources */,
 				23BDF61425BB0B6E005FF61D /* LocationIdWithElevation.swift in Sources */,

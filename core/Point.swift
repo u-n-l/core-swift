@@ -10,7 +10,7 @@ public class Point: Equatable, Decodable {
     public let lat: Double;
     public let lon: Double;
     
-    init(lat: Double, lon: Double){
+    public init(lat: Double, lon: Double){
         self.lat = lat;
         self.lon = lon;
     }

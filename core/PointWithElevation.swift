@@ -6,18 +6,18 @@
 //  Copyright © 2021 unl. All rights reserved.
 //
 
-class PointWithElevation: Equatable {
+public class PointWithElevation: Equatable {
     public let coordinates: Point;
     public let elevation: Elevation;
     public let bounds: Bounds;
     
-    init(coordinates: Point, elevation: Elevation, bounds: Bounds){
+    public init(coordinates: Point, elevation: Elevation, bounds: Bounds){
         self.coordinates = coordinates;
         self.elevation = elevation;
         self.bounds = bounds;
     };
     
-    static func == (lhs: PointWithElevation, rhs: PointWithElevation) -> Bool {
+    public static func == (lhs: PointWithElevation, rhs: PointWithElevation) -> Bool {
         return lhs.coordinates == rhs.coordinates && lhs.elevation == rhs.elevation && lhs.bounds == rhs.bounds;
     }
 }
