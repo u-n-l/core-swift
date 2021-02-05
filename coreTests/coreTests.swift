@@ -174,39 +174,39 @@ class coreTests: XCTestCase {
         );
     }
     
-    func testNeighbour() {
+    func testNeighbours() {
         /*  fetches neighbours */
         XCTAssertEqual(
-            try UnlCore.neighbour(locationId: "ezzz"),
-            Neighbour(n: "gbpb", ne: "u000", e: "spbp", se: "spbn", s: "ezzy", sw: "ezzw", w: "ezzx", nw: "gbp8"),
+            try UnlCore.neighbours(locationId: "ezzz"),
+            Neighbours(n: "gbpb", ne: "u000", e: "spbp", se: "spbn", s: "ezzy", sw: "ezzw", w: "ezzx", nw: "gbp8"),
             "fetch neighbours result is incorrect"
         );
         
         /*  fetches neighbours 5th floor */
         XCTAssertEqual(
-            try UnlCore.neighbour(locationId: "ezzz@5"),
-            Neighbour(n: "gbpb@5", ne: "u000@5", e: "spbp@5", se: "spbn@5", s: "ezzy@5", sw: "ezzw@5", w: "ezzx@5", nw: "gbp8@5"),
+            try UnlCore.neighbours(locationId: "ezzz@5"),
+            Neighbours(n: "gbpb@5", ne: "u000@5", e: "spbp@5", se: "spbn@5", s: "ezzy@5", sw: "ezzw@5", w: "ezzx@5", nw: "gbp8@5"),
             "fetch neighbours 5th floor result is incorrect"
         );
         
         /* fetches neighbours -2 floor */
         XCTAssertEqual(
-            try UnlCore.neighbour(locationId: "ezzz@-2"),
-            Neighbour(n: "gbpb@-2", ne: "u000@-2", e: "spbp@-2", se: "spbn@-2", s: "ezzy@-2", sw: "ezzw@-2", w: "ezzx@-2", nw: "gbp8@-2"),
+            try UnlCore.neighbours(locationId: "ezzz@-2"),
+            Neighbours(n: "gbpb@-2", ne: "u000@-2", e: "spbp@-2", se: "spbn@-2", s: "ezzy@-2", sw: "ezzw@-2", w: "ezzx@-2", nw: "gbp8@-2"),
             "fetch neighbours -2 floor result is incorrect"
         );
         
         /* fetches neighbours above 87cm */
         XCTAssertEqual(
-            try UnlCore.neighbour(locationId: "ezzz#87"),
-            Neighbour(n: "gbpb#87", ne: "u000#87", e: "spbp#87", se: "spbn#87", s: "ezzy#87", sw: "ezzw#87", w: "ezzx#87", nw: "gbp8#87"),
+            try UnlCore.neighbours(locationId: "ezzz#87"),
+            Neighbours(n: "gbpb#87", ne: "u000#87", e: "spbp#87", se: "spbn#87", s: "ezzy#87", sw: "ezzw#87", w: "ezzx#87", nw: "gbp8#87"),
             "fetch neighbours above 87cm result is incorrect"
         );
         
         /* fetches neighbours below 5cm */
         XCTAssertEqual(
-            try UnlCore.neighbour(locationId: "ezzz#-5"),
-            Neighbour(n: "gbpb#-5", ne: "u000#-5", e: "spbp#-5", se: "spbn#-5", s: "ezzy#-5", sw: "ezzw#-5", w: "ezzx#-5", nw: "gbp8#-5"),
+            try UnlCore.neighbours(locationId: "ezzz#-5"),
+            Neighbours(n: "gbpb#-5", ne: "u000#-5", e: "spbp#-5", se: "spbn#-5", s: "ezzy#-5", sw: "ezzw#-5", w: "ezzx#-5", nw: "gbp8#-5"),
             "fetch neighbours below 5cm result is incorrect"
         );
     }

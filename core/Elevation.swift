@@ -10,12 +10,12 @@ public class Elevation: Equatable {
     public let elevation: Int;
     public let elevationType: String;
     
-    init(elevation: Int, elevationType: String){
+    public init(elevation: Int, elevationType: String){
         self.elevation = elevation;
         self.elevationType = elevationType;
     }
     
-    convenience init(elevation: Int){
+    public convenience init(elevation: Int){
         self.init(elevation: elevation, elevationType: "floor");
     }
     

@@ -12,7 +12,7 @@ public class Bounds: Equatable, Decodable {
     public let s: Double;
     public let w: Double;
     
-    init(n: Double, e: Double, s: Double, w: Double){
+    public init(n: Double, e: Double, s: Double, w: Double){
         self.n = n;
         self.e = e;
         self.s = s;

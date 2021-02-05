@@ -6,7 +6,7 @@
 //  Copyright © 2021 unl. All rights reserved.
 //
 
-enum UnlCoreError: Error {
+public enum UnlCoreError: Error {
     case illegalArgument(messsage: String)
     case jsonDecodingError(message: String)
     case httpRequestError(message: String)

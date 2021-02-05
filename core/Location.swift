@@ -13,7 +13,7 @@ public class Location: Equatable, Decodable {
     public let geohash: String;
     public let words: String;
     
-    init(point: Point, elevation: Elevation, bounds: Bounds, geohash: String, words: String){
+    public init(point: Point, elevation: Elevation, bounds: Bounds, geohash: String, words: String){
         self.point = point;
         self.elevation = elevation;
         self.bounds = bounds;
